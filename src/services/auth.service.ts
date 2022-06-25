@@ -1,6 +1,6 @@
-import axios from 'axios';
 import Service from './service';
 import { LoginParams, SignupParams } from '../types/auth.type';
+import { customAxios } from '../infra/api';
 
 class AuthService extends Service {
   /** refreshToken을 이용해 새로운 토큰을 발급받습니다. */
@@ -10,29 +10,27 @@ class AuthService extends Service {
       return;
     }
 
-    const {
-      data: { access, refresh },
-    } = await axios.post(
-      process.env.NEXT_PUBLIC_API_HOST + '/auth/refresh',
-      null,
-      {
+    try {
+      const option = {
         headers: {
           Authorization: `Bearer ${refreshToken}`,
         },
-      }
-    );
+      };
+      const {
+        data: { access, refresh },
+      } = await customAxios(option).get('/auth/refresh');
 
-    this.setToken(access, refresh);
+      this.setToken(access, refresh);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /** 새로운 계정을 생성하고 토큰을 발급받습니다. */
   async signup(userSignupData: SignupParams) {
     const {
       data: { access, refresh },
-    } = await axios.post(
-      process.env.NEXT_PUBLIC_API_HOST + '/auth/signup',
-      userSignupData
-    );
+    } = await customAxios().post('/auth/signup', userSignupData);
 
     this.setToken(access, refresh);
   }
@@ -41,10 +39,7 @@ class AuthService extends Service {
   async login(userLoginData: LoginParams) {
     const {
       data: { access, refresh },
-    } = await axios.post(
-      process.env.NEXT_PUBLIC_API_HOST + '/auth/login',
-      userLoginData
-    );
+    } = await customAxios().post('/auth/login', userLoginData);
 
     this.setToken(access, refresh);
   }

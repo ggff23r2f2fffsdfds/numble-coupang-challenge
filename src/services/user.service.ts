@@ -1,5 +1,5 @@
-import axios from 'axios';
 import Service from './service';
+import { customAxios } from '../infra/api';
 
 class UserService extends Service {
   async me() {
@@ -7,25 +7,26 @@ class UserService extends Service {
     if (!accessToken) {
       return;
     }
-
-    const { data } = await axios.get(
-      process.env.NEXT_PUBLIC_API_HOST + '/users/me',
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-
-    return data;
+    const option = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    try {
+      const { data } = await customAxios(option).get('/users/me');
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async read(id: number) {
-    const { data } = await axios.get(
-      process.env.NEXT_PUBLIC_API_HOST + '/users/' + id
-    );
-
-    return data;
+    try {
+      const { data } = await customAxios().get(`/users/${id}`);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
