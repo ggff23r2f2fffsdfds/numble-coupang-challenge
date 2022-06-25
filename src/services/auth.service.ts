@@ -1,16 +1,6 @@
 import axios from 'axios';
 import Service from './service';
-
-type SignupAgreements = {
-  privacy: boolean;
-  ad:
-    | {
-        email: boolean;
-        sms: boolean;
-        app: boolean;
-      }
-    | false;
-};
+import { LoginParams, SignupParams } from '../types/auth.type';
 
 class AuthService extends Service {
   /** refreshToken을 이용해 새로운 토큰을 발급받습니다. */
@@ -36,34 +26,25 @@ class AuthService extends Service {
   }
 
   /** 새로운 계정을 생성하고 토큰을 발급받습니다. */
-  async signup(
-    email: string,
-    password: string,
-    name: string,
-    phoneNumber: string,
-    agreements: SignupAgreements
-  ) {
+  async signup(userSignupData: SignupParams) {
     const {
       data: { access, refresh },
-    } = await axios.post(process.env.NEXT_PUBLIC_API_HOST + '/auth/signup', {
-      email,
-      password,
-      name,
-      phoneNumber,
-      agreements,
-    });
+    } = await axios.post(
+      process.env.NEXT_PUBLIC_API_HOST + '/auth/signup',
+      userSignupData
+    );
 
     this.setToken(access, refresh);
   }
 
   /** 이미 생성된 계정의 토큰을 발급받습니다. */
-  async login(email: string, password: string) {
+  async login(userLoginData: LoginParams) {
     const {
       data: { access, refresh },
-    } = await axios.post(process.env.NEXT_PUBLIC_API_HOST + '/auth/login', {
-      email,
-      password,
-    });
+    } = await axios.post(
+      process.env.NEXT_PUBLIC_API_HOST + '/auth/login',
+      userLoginData
+    );
 
     this.setToken(access, refresh);
   }
