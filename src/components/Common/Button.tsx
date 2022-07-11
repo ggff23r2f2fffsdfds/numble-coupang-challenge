@@ -39,6 +39,7 @@ export default Button;
 
 const Container = styled.button<{ buttonColor: SerializedStyles }>`
   display: block;
+  width: 100%;
   padding: 16px 0;
   text-align: center;
   font-size: 17px;
