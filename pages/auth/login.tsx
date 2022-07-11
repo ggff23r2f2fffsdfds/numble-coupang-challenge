@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { MdOutlineLocalPostOffice } from 'react-icons/md';
 import { AiOutlineLock } from 'react-icons/ai';
 
-import { Input, Button } from '../../src/components/Common';
+import { Input, Button } from '../../src/components/common';
 
 export default function LoginPage() {
   const { register, handleSubmit } = useForm<{
@@ -19,12 +19,14 @@ export default function LoginPage() {
     <Container>
       <Wrapper>
         <Header>
-          <Image
-            src={'/images/logo_coupang.png'}
-            alt="Logo"
-            width={200}
-            height={50}
-          />
+          <h1>
+            <Image
+              src={'/images/logo_coupang.png'}
+              alt="Logo"
+              width={200}
+              height={50}
+            />
+          </h1>
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Input
@@ -55,21 +57,27 @@ export default function LoginPage() {
 
 const Container = styled.div`
   width: 100%;
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const Header = styled.div`
+const Wrapper = styled.div`
+  width: 500px;
+  margin: 0 auto;
+`;
+
+const Header = styled.header`
+  width: 100%;
   margin-bottom: 30px;
+  text-align: center;
+  h1 {
+    width: 100%;
+  }
 `;
 
 const Form = styled.form`
-  width: 500px;
+  width: 100%auto;
   display: flex;
   gap: 12px 0;
   flex-direction: column;
