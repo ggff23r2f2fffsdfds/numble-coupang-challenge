@@ -9,7 +9,7 @@ type InputProps = {
   type: string;
   label: string;
   register: any;
-  errors?: any;
+  errors: any;
 };
 
 const Input: React.FC<InputProps> = ({
