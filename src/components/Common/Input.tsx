@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import colors from '../../constants/colors';
 
 type InputProps = {
@@ -19,15 +20,26 @@ const Input: React.FC<InputProps> = ({
   icon,
   placeholder,
 }) => {
+  const [isFocusInput, setIsFocusInput] = useState<boolean>(false);
+
+  const handleFocus = () => setIsFocusInput(true);
+  const handleBlur = () => setIsFocusInput(false);
+
   return (
     <Container>
-      <Label>
+      <Label isFocusInput={isFocusInput} isError={!!errors[label]}>
         <IConWrap>{icon}</IConWrap>
         <InputWrap>
-          <input {...register} type={type} placeholder={placeholder} />
+          <input
+            onFocus={handleFocus}
+            onBlurCapture={handleBlur}
+            {...register}
+            type={type}
+            placeholder={placeholder}
+          />
         </InputWrap>
       </Label>
-      {errors[label] && (
+      {errors && errors[label] && (
         <ErrorHint color={colors.RED}>{errors[label].message}</ErrorHint>
       )}
     </Container>
@@ -44,13 +56,27 @@ const Container = styled.div`
   }
 `;
 
-const Label = styled.label`
+const Label = styled.label<{
+  isFocusInput: boolean;
+  isError: boolean;
+}>`
   display: block;
   height: 48px;
   border: 1px solid #ccc;
   font-size: 14px;
   line-height: 20px;
   color: #111;
+  ${(props) =>
+    props.isFocusInput &&
+    css`
+      border-bottom: 1px solid #0074e9; ;
+    `};
+
+  ${(props) =>
+    props.isError &&
+    css`
+      border-bottom: 1px solid #e7223d; ;
+    `};
 `;
 
 const IConWrap = styled.span`
@@ -72,7 +98,7 @@ const InputWrap = styled.span`
   overflow: hidden;
   display: block;
   margin: 0;
-  & input {
+  input {
     padding: 16px 0 12px;
     width: 100%;
     text-indent: 12px;
