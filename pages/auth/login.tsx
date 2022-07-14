@@ -1,19 +1,48 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { MdOutlineLocalPostOffice } from 'react-icons/md';
 import { AiOutlineLock } from 'react-icons/ai';
 
 import { Input, Button } from '../../src/components/common';
+import {
+  EMAIL_REQUIRED_HINT,
+  EMAIL_PATTERN_HINT,
+  PASSWORD_REQUIRED_HINT,
+  PASSWORD_PATTERN_HINT,
+} from '../../src/constants/message';
+
+type InputType = { email: string; password: string };
 
 export default function LoginPage() {
-  const { register, handleSubmit } = useForm<{
-    email: string;
-    password: string;
-  }>();
+  const {
+    register,
+    handleSubmit,
 
-  const onSubmit = () => {};
+    formState: { errors },
+  } = useForm<InputType>();
+
+  const onSubmit: SubmitHandler<InputType> = (data) => console.log(data);
+
+  const emailRegister = {
+    ...register('email', {
+      required: { value: true, message: EMAIL_REQUIRED_HINT },
+      pattern: { value: /^\S+@\S+$/i, message: EMAIL_PATTERN_HINT },
+    }),
+  };
+  const passwordRegister = {
+    ...register('password', {
+      required: { value: true, message: PASSWORD_REQUIRED_HINT },
+      pattern: {
+        value:
+          /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?=[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,}$/i,
+        message: PASSWORD_PATTERN_HINT,
+      },
+      minLength: { value: 8, message: PASSWORD_PATTERN_HINT },
+      maxLength: { value: 20, message: PASSWORD_PATTERN_HINT },
+    }),
+  };
 
   return (
     <Container>
@@ -30,14 +59,18 @@ export default function LoginPage() {
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Input
+            type="email"
             label="email"
-            register={register}
+            register={emailRegister}
+            errors={errors}
             placeholder={'아이디(이메일)'}
             icon={<MdOutlineLocalPostOffice size={24} />}
           />
           <Input
+            type="password"
             label="password"
-            register={register}
+            register={passwordRegister}
+            errors={errors}
             placeholder={'비밀번호'}
             icon={<AiOutlineLock size={24} />}
           />

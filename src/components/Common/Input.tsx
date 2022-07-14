@@ -3,16 +3,20 @@ import styled from '@emotion/styled';
 import colors from '../../constants/colors';
 
 type InputProps = {
-  label: string;
   placeholder?: string;
   icon: React.ReactNode;
+  type: string;
+  label: string;
   register: any;
+  errors?: any;
 };
 
 const Input: React.FC<InputProps> = ({
   register,
-  icon,
+  errors,
   label,
+  type,
+  icon,
   placeholder,
 }) => {
   return (
@@ -20,13 +24,12 @@ const Input: React.FC<InputProps> = ({
       <Label>
         <IConWrap>{icon}</IConWrap>
         <InputWrap>
-          <input
-            {...register(label, {})}
-            type="text"
-            placeholder={placeholder}
-          />
+          <input {...register} type={type} placeholder={placeholder} />
         </InputWrap>
       </Label>
+      {errors[label] && (
+        <ErrorHint color={colors.RED}>{errors[label].message}</ErrorHint>
+      )}
     </Container>
   );
 };
@@ -72,4 +75,14 @@ const InputWrap = styled.span`
     text-indent: 12px;
     font-weight: 700;
   }
+`;
+
+const ErrorHint = styled.p<{ color: string }>`
+  color: ${(props) => props.color};
+  display: block;
+  margin: 9px 12px 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 18px;
+  cursor: default;
 `;

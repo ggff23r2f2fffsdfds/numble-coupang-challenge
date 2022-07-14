@@ -17,5 +17,5 @@ export default Layout;
 
 const Main = styled.main`
   width: 100%;
-  padding-top: 100px;
+  padding-top: 50px;
 `;
