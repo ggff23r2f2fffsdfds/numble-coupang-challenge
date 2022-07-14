@@ -49,4 +49,8 @@ const Container = styled.button<{ buttonColor: SerializedStyles }>`
   border-radius: 2px;
   box-shadow: inset 0 -2px 0 rgb(0 0 0 / 38%);
   ${(props) => props.buttonColor};
+  & + &,
+  & + a {
+    margin-top: 15px;
+  }
 `;

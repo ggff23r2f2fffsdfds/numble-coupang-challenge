@@ -19,7 +19,6 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm<InputType>();
 
@@ -58,30 +57,34 @@ export default function LoginPage() {
           </h1>
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            type="email"
-            label="email"
-            register={emailRegister}
-            errors={errors}
-            placeholder={'아이디(이메일)'}
-            icon={<MdOutlineLocalPostOffice size={24} />}
-          />
-          <Input
-            type="password"
-            label="password"
-            register={passwordRegister}
-            errors={errors}
-            placeholder={'비밀번호'}
-            icon={<AiOutlineLock size={24} />}
-          />
-          <Button type="submit" color="blue">
-            로그인
-          </Button>
-          <Link href="/auth/signup">
-            <a>
-              <Button color="white">회원가입</Button>
-            </a>
-          </Link>
+          <InputWrap>
+            <Input
+              type="email"
+              label="email"
+              register={emailRegister}
+              errors={errors}
+              placeholder={'아이디(이메일)'}
+              icon={<MdOutlineLocalPostOffice size={24} />}
+            />
+            <Input
+              type="password"
+              label="password"
+              register={passwordRegister}
+              errors={errors}
+              placeholder={'비밀번호'}
+              icon={<AiOutlineLock size={24} />}
+            />
+          </InputWrap>
+          <ButtonWrap>
+            <Button type="submit" color="blue">
+              로그인
+            </Button>
+            <Link href="/auth/signup">
+              <a>
+                <Button color="white">회원가입</Button>
+              </a>
+            </Link>
+          </ButtonWrap>
         </Form>
       </Wrapper>
     </Container>
@@ -96,7 +99,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 500px;
+  width: 460px;
   margin: 0 auto;
 `;
 
@@ -110,8 +113,20 @@ const Header = styled.header`
 `;
 
 const Form = styled.form`
-  width: 100%auto;
+  width: 100%;
   display: flex;
-  gap: 12px 0;
+  flex-direction: column;
+`;
+
+const InputWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+
+const ButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
   flex-direction: column;
 `;

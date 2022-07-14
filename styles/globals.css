@@ -18,10 +18,14 @@ a {
 button {
   cursor: pointer;
 }
-
 input {
   border: none;
 }
 input:focus {
   outline: none;
+}
+ul,
+li,
+ol {
+  list-style: none;
 }

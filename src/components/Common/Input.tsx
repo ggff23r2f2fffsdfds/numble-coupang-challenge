@@ -39,6 +39,9 @@ export default Input;
 const Container = styled.div`
   width: 100%;
   display: block;
+  & + & {
+    margin-top: 15px;
+  }
 `;
 
 const Label = styled.label`
