@@ -6,7 +6,7 @@ import { AiOutlineLock } from 'react-icons/ai';
 import { MdPhoneIphone } from 'react-icons/md';
 import { FaRegUser } from 'react-icons/fa';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Input, Button } from '../../src/components/common';
+import { Input, Button, Checkbox } from '../../src/components/common';
 import {
   EMAIL_REQUIRED_HINT,
   EMAIL_PATTERN_HINT,
@@ -156,19 +156,15 @@ export default function SignupPage() {
             </InfoWrap>
             <TermsWrap>
               <Title>쿠팡 서비스약관에 동의해주세요</Title>
-              <CheckAllWrap>
-                <CheckAll>
-                  <input type="checkbox" />
-                  <span>모두 동의합니다.</span>
-                </CheckAll>
-                <CheckAllMessage>{TERMS_CHECK_ALL_MESSAGE}</CheckAllMessage>
-              </CheckAllWrap>
+              <Checkbox
+                label={'모두 동의합니다.'}
+                fontSize={'16px'}
+                bold={true}
+                description={TERMS_CHECK_ALL_MESSAGE}
+              />
               <Terms>
                 {TermsArray.map((terms, index) => (
-                  <TermsItem key={index}>
-                    <TermsCheckBox type="checkbox" />
-                    <span>{terms}</span>
-                  </TermsItem>
+                  <Checkbox key={index} label={terms} />
                 ))}
               </Terms>
             </TermsWrap>
@@ -242,30 +238,6 @@ const TermsWrap = styled.div`
   flex-direction: column;
 `;
 
-const CheckAllWrap = styled.div``;
-
-const CheckAll = styled.div`
-  width: 100%;
-  span {
-    margin-left: 10px;
-    line-height: 1.4;
-    word-break: break-all;
-    font-size: 16px;
-    font-weight: bold;
-    color: #111111;
-  }
-  input {
-  }
-`;
-const CheckAllMessage = styled.span`
-  font-size: 12px;
-  line-height: 1.4;
-  color: #555;
-  margin-top: 6px;
-  margin-left: 26px;
-  display: block;
-`;
-
 const Terms = styled.ul`
   margin-top: 16px;
   padding: 18px 16px;
@@ -274,37 +246,6 @@ const Terms = styled.ul`
   overflow: hidden;
   gap: 30px;
   row-gap: 20px;
-`;
-
-const TermsItem = styled.li`
-  line-height: 1.14;
-  color: #333333;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex: 1 auto;
-  margin-right: 25px;
-  cursor: pointer;
-  color: #111;
-  padding-bottom: 12px;
-  span {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.4;
-    word-break: break-all;
-    margin-top: 2px;
-  }
-  :nth-child(n + 8) {
-    padding-left: 22px;
-  }
-`;
-
-const TermsCheckBox = styled.input`
-  min-width: 20px;
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
 `;
 
 const ButtonWrap = styled.div`
