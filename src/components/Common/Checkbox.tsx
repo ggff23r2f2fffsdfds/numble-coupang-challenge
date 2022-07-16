@@ -59,7 +59,7 @@ const Label = styled.label<{ fontSize: string; bold?: boolean }>`
   line-height: 1.14;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   flex: 1 auto;
   margin-right: 25px;
   cursor: pointer;
@@ -77,7 +77,6 @@ const Label = styled.label<{ fontSize: string; bold?: boolean }>`
     font-weight: ${(props) => (props.bold ? 'bold' : 500)};
     line-height: 1.4;
     word-break: break-all;
-    margin-top: 2px;
     color: #111111;
   }
 `;

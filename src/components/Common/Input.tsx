@@ -5,7 +5,7 @@ import colors from '../../constants/colors';
 
 type InputProps = {
   placeholder?: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   type: string;
   label: string;
   register: any;
@@ -28,7 +28,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <Container>
       <Label isFocusInput={isFocusInput} isError={!!errors[label]}>
-        <IConWrap>{icon}</IConWrap>
+        {icon && <IConWrap>{icon}</IConWrap>}
         <InputWrap>
           <input
             onFocus={handleFocus}
@@ -80,16 +80,15 @@ const Label = styled.label<{
 `;
 
 const IConWrap = styled.span`
-  position: relative;
   float: left;
   height: 100%;
   min-width: 44px;
   border-right: 1px solid #ccc;
+  padding: 13px;
   background-color: #fafafa;
   svg {
-    position: absolute;
-    top: 25%;
-    left: 25%;
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -103,6 +102,9 @@ const InputWrap = styled.span`
     width: 100%;
     text-indent: 12px;
     font-weight: 700;
+    :focus {
+      outline: none;
+    }
   }
 `;
 
