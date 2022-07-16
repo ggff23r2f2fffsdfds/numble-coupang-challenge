@@ -102,9 +102,6 @@ const InputWrap = styled.span`
     width: 100%;
     text-indent: 12px;
     font-weight: 700;
-    :focus {
-      outline: none;
-    }
   }
 `;
 
