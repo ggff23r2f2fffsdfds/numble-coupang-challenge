@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { MdOutlineLocalPostOffice } from 'react-icons/md';
 import { AiOutlineLock } from 'react-icons/ai';
 import { MdPhoneIphone } from 'react-icons/md';
+import { RiErrorWarningLine } from 'react-icons/ri';
 import { FaRegUser } from 'react-icons/fa';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Input, Button, Checkbox } from '../../src/components/common';
@@ -17,31 +18,91 @@ import {
   PHONE_REQUIRED_HINT,
 } from '../../src/constants/message';
 
-const TERMS_CHECK_ALL_MESSAGE: string =
-  '동의에는 필수 및 선택 목적(광고성 정보 수신 포함)에 대한 동의가 포함되어 있으며, 선택 목적의 동의를 거부하시는 경우에도 서비스 이용이 가능합니다.';
-
-const TermsArray = [
-  '[필수] 만 14세 이상입니다',
-  '[필수] 쿠팡 이용약관 동의',
-  '[필수] 전자금융거래 이용약관 동의',
-  '[필수] 개인정보 수집 및 이용 동의',
-  '[필수] 개인정보 제3자 제공 동의',
-  '[선택] 광고성 목적의 개인정보 수집 및 이용 동의',
-  '[선택] 광고성 정보 수신 동의',
-  '[선택] 이메일 수신 동의',
-  '[선택] SMS,MMS 수신 동의',
-  '[선택] 앱 푸시 수신 동의',
-];
-
 type InputType = {
   email: string;
   password: string;
   confirmPassword: string;
   userName: string;
   phoneNumber: string;
+  selectAll: string;
+  sub: string;
 };
 
+type TermsTypes = {
+  id: number;
+  label: string;
+  isChecked: boolean;
+  required: boolean;
+};
+
+const TERMS_CHECK_ALL_MESSAGE: string =
+  '동의에는 필수 및 선택 목적(광고성 정보 수신 포함)에 대한 동의가 포함되어 있으며, 선택 목적의 동의를 거부하시는 경우에도 서비스 이용이 가능합니다.';
+
+const initialTermsList: TermsTypes[] = [
+  {
+    id: 0,
+    label: '[필수] 만 14세 이상입니다',
+    isChecked: false,
+    required: true,
+  },
+  {
+    id: 1,
+    label: '[필수] 쿠팡 이용약관 동의',
+    isChecked: false,
+    required: true,
+  },
+  {
+    id: 2,
+    label: '[필수] 전자금융거래 이용약관 동의',
+    isChecked: false,
+    required: true,
+  },
+  {
+    id: 3,
+    label: '[필수] 개인정보 수집 및 이용 동의',
+    isChecked: false,
+    required: true,
+  },
+  {
+    id: 4,
+    label: '[필수] 개인정보 제3자 제공 동의',
+    isChecked: false,
+    required: true,
+  },
+  {
+    id: 5,
+    label: '[선택] 광고성 목적의 개인정보 수집 및 이용 동의',
+    isChecked: false,
+    required: false,
+  },
+  {
+    id: 6,
+    label: '[선택] 광고성 정보 수신 동의',
+    isChecked: false,
+    required: false,
+  },
+  {
+    id: 7,
+    label: '[선택] 이메일 수신 동의',
+    isChecked: false,
+    required: false,
+  },
+  {
+    id: 8,
+    label: '[선택] SMS,MMS 수신 동의',
+    isChecked: false,
+    required: false,
+  },
+  {
+    id: 9,
+    label: '[선택] 앱 푸시 수신 동의',
+    isChecked: false,
+    required: false,
+  },
+];
+
 export default function SignupPage() {
+  const [termsList, setTermsList] = useState<TermsTypes[]>(initialTermsList);
   const {
     register,
     handleSubmit,
@@ -90,6 +151,24 @@ export default function SignupPage() {
     ...register('phoneNumber', {
       required: { value: true, message: PHONE_REQUIRED_HINT },
     }),
+  };
+
+  const handleChange = (event: React.MouseEvent<HTMLElement>) => {
+    const { id, checked, name } = event.target as HTMLInputElement;
+
+    if (name === 'selectAll') {
+      const newTermsList = termsList.map((terms) => ({
+        ...terms,
+        isChecked: checked,
+      }));
+      setTermsList(newTermsList);
+      return;
+    }
+
+    const newTermsList = termsList.map((terms) =>
+      terms.id === parseInt(id) ? { ...terms, isChecked: checked } : terms
+    );
+    setTermsList(newTermsList);
   };
 
   const onSubmit: SubmitHandler<InputType> = (data) => console.log(data);
@@ -157,14 +236,34 @@ export default function SignupPage() {
             <TermsWrap>
               <Title>쿠팡 서비스약관에 동의해주세요</Title>
               <Checkbox
+                checked={termsList.every((terms) => terms.isChecked === true)}
+                register={register('selectAll')}
                 label={'모두 동의합니다.'}
                 fontSize={'16px'}
                 bold={true}
+                name={'selectAll'}
+                onClick={(event) => handleChange(event)}
                 description={TERMS_CHECK_ALL_MESSAGE}
               />
+              {errors && errors.sub && (
+                <CheckboxErrorHint>
+                  <RiErrorWarningLine color={'#cb1400'} />
+                  <span>필수 항목에 모두 동의해주세요.</span>
+                </CheckboxErrorHint>
+              )}
               <Terms>
-                {TermsArray.map((terms, index) => (
-                  <Checkbox key={index} label={terms} />
+                {termsList.map((terms, index) => (
+                  <Checkbox
+                    register={register('sub', {
+                      required: terms.required,
+                    })}
+                    checked={terms.isChecked}
+                    key={index}
+                    id={index}
+                    name={'sub'}
+                    onClick={(event) => handleChange(event)}
+                    label={terms.label}
+                  />
                 ))}
               </Terms>
             </TermsWrap>
@@ -250,4 +349,20 @@ const Terms = styled.ul`
 
 const ButtonWrap = styled.div`
   width: 100%;
+`;
+
+const CheckboxErrorHint = styled.p`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  span {
+    font-size: 12px;
+    line-height: 1.25;
+    color: #cb1400;
+    padding-left: 4px;
+  }
+  svg {
+    width: 12px;
+    height: 12px;
+  }
 `;

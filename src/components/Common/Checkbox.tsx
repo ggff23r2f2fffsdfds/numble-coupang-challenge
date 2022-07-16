@@ -2,22 +2,40 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 type CheckboxProps = {
+  register: any;
+  name: string;
+  id?: number;
   label: string;
   fontSize?: string;
   bold?: boolean;
   description?: string;
+  checked: boolean;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 const Checkbox: React.FC<CheckboxProps> = ({
+  checked,
+  name,
+  id,
+  register,
   label,
   fontSize = '14px',
   bold,
   description,
+  onClick,
 }) => {
   return (
     <Container>
       <Label fontSize={fontSize} bold={bold}>
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          name={name}
+          id={id}
+          checked={checked}
+          onClick={onClick}
+          onChange={onClick}
+          {...register}
+        />
         <span>{label}</span>
       </Label>
       {description && <Description>{description}</Description>}
