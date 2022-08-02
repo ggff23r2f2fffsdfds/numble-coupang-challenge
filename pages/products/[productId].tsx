@@ -1,16 +1,16 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { BreadCrumb } from '../../src/components/product';
+import { BreadCrumb } from 'src/components/product';
 
 export default function VendoritemPage() {
   const router = useRouter();
-  const { productId, vendoritem } = router.query;
+  const { productId } = router.query as { productId: string };
 
   return (
     <Container>
       <Wrapper>
-        <BreadCrumb productId={Number(productId)} />
+        <BreadCrumb productId={productId} />
       </Wrapper>
     </Container>
   );

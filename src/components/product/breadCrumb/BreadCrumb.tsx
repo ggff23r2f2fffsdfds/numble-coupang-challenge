@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { BreadCrumbType } from '../../types/product';
-import { useRequest } from '../../hooks';
+import { BreadCrumbType } from '../../../types/product';
+import { useRequest } from '../../../hooks';
 
 type BreadCrumbProps = {
-  productId: number;
+  productId: string;
 };
 
 export default function BreadCrumb({ productId }: BreadCrumbProps) {
@@ -31,6 +31,7 @@ export default function BreadCrumb({ productId }: BreadCrumbProps) {
 const Container = styled.ul`
   width: 100%;
   display: flex;
+  padding-left: 0;
 `;
 
 const BreadCrumbItem = styled.li`
