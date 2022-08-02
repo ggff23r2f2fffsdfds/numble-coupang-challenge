@@ -11,6 +11,10 @@ a {
   text-decoration: none;
 }
 
+em {
+  font-style: normal;
+}
+
 ul,
 ol,
 li {
