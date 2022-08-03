@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { BreadCrumb, ProductInfo } from 'src/components/product';
+import { OtherProduct } from 'src/components/product';
 
 export default function VendoritemPage() {
   const [status, setStatus] = useState(false);
@@ -25,6 +26,7 @@ export default function VendoritemPage() {
           </Header>
           <Main>
             <ProductInfo productId={productId} vendoritemId={vendoritemId} />
+            <OtherProduct productId={productId} />
           </Main>
         </Wrapper>
       )}
