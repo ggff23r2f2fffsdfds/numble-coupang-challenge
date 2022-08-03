@@ -35,3 +35,23 @@ export type ProductImage = {
   detailImage: string;
   thumbnailImage: string;
 };
+
+export type OtherProductItemType = {
+  vendorItemId: number;
+  title: string;
+  subscribe: boolean;
+  salesPrice: number;
+  ratingCount: number;
+  ratingAverage: number;
+  productId: number;
+  link: string;
+  itemId: number;
+  imageUrl: string;
+  badgeUrl: string;
+  badgeType: string;
+};
+
+export type OtherProductListType = {
+  logoImageUrl: string;
+  items: OtherProductItemType[];
+};
