@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRequest } from '../../../hooks';
 import { ProductInfoType } from '../../../types/product';
-import { BundleOption, Shipping, Price, Description } from './';
+import { ProductImages, BundleOption, Shipping, Price, Description } from './';
 
 type ProductInfoProps = {
   productId: string;
@@ -20,17 +20,22 @@ export default function ProductInfo({
     <Container>
       {productInfo && (
         <Wrapper>
-          <Name>
-            <h2>{productInfo.name}</h2>
-          </Name>
-          <Price price={productInfo.price} ccidInfo={productInfo.ccidInfo} />
-          <Shipping deliveryList={productInfo.deliveryList} />
-          <BundleOption bundleOption={productInfo.bundleOption} />
-          <Quantity>
-            <input type="number" value={1} readOnly />
-            <QuantityButton>로켓와우 무료 체험하기</QuantityButton>
-          </Quantity>
-          <Description sellingInfo={productInfo.sellingInfo} />
+          <ProductImagesBox>
+            <ProductImages images={productInfo.images} />
+          </ProductImagesBox>
+          <ProductInfoBox>
+            <Name>
+              <h2>{productInfo.name}</h2>
+            </Name>
+            <Price price={productInfo.price} ccidInfo={productInfo.ccidInfo} />
+            <Shipping deliveryList={productInfo.deliveryList} />
+            <BundleOption bundleOption={productInfo.bundleOption} />
+            <Quantity>
+              <input type="number" value={1} readOnly />
+              <QuantityButton>로켓와우 무료 체험하기</QuantityButton>
+            </Quantity>
+            <Description sellingInfo={productInfo.sellingInfo} />
+          </ProductInfoBox>
         </Wrapper>
       )}
     </Container>
@@ -38,10 +43,21 @@ export default function ProductInfo({
 }
 
 const Container = styled.div`
-  width: 50%;
+  width: 100%;
 `;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+`;
+
+const ProductImagesBox = styled.div`
+  width: 49.5%;
+`;
+
+const ProductInfoBox = styled.div`
+  width: 50.5%;
+`;
 
 const Name = styled.div`
   width: 100%;

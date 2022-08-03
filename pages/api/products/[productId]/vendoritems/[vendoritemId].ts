@@ -14,6 +14,12 @@ export default async function handler(
   const result: ProductInfoType = {
     id: data.itemId,
     name: data.itemName,
+    images: data.images.map((image: any) => {
+      return {
+        detailImage: image.detailImage,
+        thumbnailImage: image.thumbnailImage,
+      };
+    }),
     price: {
       originPrice: data.quantityBase[0].price.originPrice,
       salePrice: data.quantityBase[0].price.salePrice,

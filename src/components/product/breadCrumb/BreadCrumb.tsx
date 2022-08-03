@@ -31,7 +31,8 @@ export default function BreadCrumb({ productId }: BreadCrumbProps) {
 const Container = styled.ul`
   width: 100%;
   display: flex;
-  padding-left: 0;
+  min-height: 50px;
+  padding-top: 10px;
 `;
 
 const BreadCrumbItem = styled.li`
@@ -41,4 +42,8 @@ const BreadCrumbItem = styled.li`
 const StyledLink = styled.a`
   font-size: 11px;
   color: #333;
+  :hover {
+    color: #008cff;
+    text-decoration: underline;
+  }
 `;

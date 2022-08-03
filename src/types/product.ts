@@ -6,6 +6,7 @@ export type BreadCrumbType = {
 export type ProductInfoType = {
   id: number;
   name: string;
+  images: ProductImage[];
   price: {
     originPrice: string;
     salePrice: string;
@@ -28,4 +29,9 @@ export type ProductInfoType = {
       vendorItemId: number;
     };
   };
+};
+
+export type ProductImage = {
+  detailImage: string;
+  thumbnailImage: string;
 };
