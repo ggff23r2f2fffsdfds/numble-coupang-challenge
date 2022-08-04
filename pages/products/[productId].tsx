@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { BreadCrumb, ProductInfo } from 'src/components/product';
-import { OtherProduct } from 'src/components/product';
+import {
+  BreadCrumb,
+  ProductDetail,
+  ProductInfo,
+  OtherProduct,
+} from 'src/components/product';
 
 export default function VendoritemPage() {
   const [status, setStatus] = useState(false);
   const router = useRouter();
-  const { productId, vendoritemId } = router.query as {
+  const { productId, vendoritemId, itemId } = router.query as {
     productId: string;
     vendoritemId: string;
+    itemId: string;
   };
 
   useEffect(() => {
@@ -27,6 +32,11 @@ export default function VendoritemPage() {
           <Main>
             <ProductInfo productId={productId} vendoritemId={vendoritemId} />
             <OtherProduct productId={productId} />
+            <ProductDetail
+              productId={productId}
+              vendoritemId={vendoritemId}
+              itemId={itemId}
+            />
           </Main>
         </Wrapper>
       )}
