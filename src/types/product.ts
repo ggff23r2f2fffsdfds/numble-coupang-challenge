@@ -55,3 +55,14 @@ export type OtherProductListType = {
   logoImageUrl: string;
   items: OtherProductItemType[];
 };
+
+export type ProductDetailType = {
+  productId: number;
+  itemId: number;
+  vendorItemId: number;
+  essentials: {
+    title: string;
+    description: string;
+  }[];
+  contentImages: string[];
+};

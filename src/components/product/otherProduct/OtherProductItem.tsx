@@ -8,7 +8,6 @@ type OtherProductItemProps = {
 };
 
 export default function OtherProduct({ item }: OtherProductItemProps) {
-  console.log(item);
   return (
     <Container>
       <Wrapper>
