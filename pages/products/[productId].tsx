@@ -29,7 +29,7 @@ export default function VendoritemPage() {
           <Header>
             <BreadCrumb productId={productId} />
           </Header>
-          <Main>
+          <Content>
             <ProductInfo productId={productId} vendoritemId={vendoritemId} />
             <OtherProduct productId={productId} />
             <ProductDetail
@@ -37,7 +37,7 @@ export default function VendoritemPage() {
               vendoritemId={vendoritemId}
               itemId={itemId}
             />
-          </Main>
+          </Content>
         </Wrapper>
       )}
     </Container>
@@ -63,6 +63,6 @@ const Header = styled.header`
   width: 100%;
 `;
 
-const Main = styled.main`
+const Content = styled.div`
   width: 100%;
 `;
