@@ -14,6 +14,7 @@ import {
   OtherProductListType,
   ProductDetailType,
 } from 'src/types/product';
+import ProductSEO from 'src/components/seo/ProductSEO';
 
 export default function VendoritemPage() {
   const [status, setStatus] = useState(false);
@@ -44,22 +45,31 @@ export default function VendoritemPage() {
   }, [router.isReady]);
 
   return (
-    <Container>
-      {status && (
-        <Wrapper>
-          <Header>
-            {breadCrumb && <BreadCrumb breadCrumb={breadCrumb} />}
-          </Header>
-          <Content>
-            {productInfo && <ProductInfo productInfo={productInfo} />}
-            {otherProductList && (
-              <OtherProduct otherProductList={otherProductList} />
-            )}
-            {productDetail && <ProductDetail productDetail={productDetail} />}
-          </Content>
-        </Wrapper>
+    <>
+      {productInfo && (
+        <ProductSEO
+          title={productInfo.name}
+          productId={productId}
+          image={productInfo.images[0].thumbnailImage}
+        />
       )}
-    </Container>
+      <Container>
+        {status && (
+          <Wrapper>
+            <Header>
+              {breadCrumb && <BreadCrumb breadCrumb={breadCrumb} />}
+            </Header>
+            <Content>
+              {productInfo && <ProductInfo productInfo={productInfo} />}
+              {otherProductList && (
+                <OtherProduct otherProductList={otherProductList} />
+              )}
+              {productDetail && <ProductDetail productDetail={productDetail} />}
+            </Content>
+          </Wrapper>
+        )}
+      </Container>
+    </>
   );
 }
 
