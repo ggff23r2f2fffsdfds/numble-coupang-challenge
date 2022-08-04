@@ -1,17 +1,12 @@
 import styled from '@emotion/styled';
-import { useRequest } from 'src/hooks';
-import { OtherProductListType } from 'src/types/product';
 import { OtherProductItem, BrandShop } from './';
+import { OtherProductListType } from 'src/types/product';
 
 type OtherProductProps = {
-  productId: string;
+  otherProductList: OtherProductListType;
 };
 
-export default function OtherProduct({ productId }: OtherProductProps) {
-  const otherProductList = useRequest<OtherProductListType>(
-    `products/${productId}/brand-sdp/widget/brand-sdp?itemId=1&vendoritemId=1`
-  );
-
+export default function OtherProduct({ otherProductList }: OtherProductProps) {
   return (
     <Container>
       <Wrapper>

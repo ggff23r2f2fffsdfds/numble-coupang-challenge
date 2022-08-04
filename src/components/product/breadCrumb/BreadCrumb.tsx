@@ -1,21 +1,15 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { BreadCrumbType } from '../../../types/product';
-import { useRequest } from '../../../hooks';
+import { BreadCrumbType } from 'src/types/product';
 
 type BreadCrumbProps = {
-  productId: string;
+  breadCrumb: BreadCrumbType[];
 };
 
-export default function BreadCrumb({ productId }: BreadCrumbProps) {
-  const breadCrumb = useRequest<BreadCrumbType[]>(
-    `products/${productId}/breadcrumb-gnbmenu`
-  );
-
+export default function BreadCrumb({ breadCrumb }: BreadCrumbProps) {
   return (
     <Container>
-      {breadCrumb &&
-        breadCrumb.length > 0 &&
+      {breadCrumb.length > 0 &&
         breadCrumb.map((breadCrumbItem: BreadCrumbType) => (
           <BreadCrumbItem key={breadCrumbItem.id}>
             <Link href={`/products/${breadCrumbItem.id}`} passHref>

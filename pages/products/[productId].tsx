@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useRequestProduct } from 'src/hooks';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import {
@@ -7,18 +8,38 @@ import {
   ProductInfo,
   OtherProduct,
 } from 'src/components/product';
+import {
+  BreadCrumbType,
+  ProductInfoType,
+  OtherProductListType,
+  ProductDetailType,
+} from 'src/types/product';
 
 export default function VendoritemPage() {
   const [status, setStatus] = useState(false);
   const router = useRouter();
+
   const { productId, vendoritemId, itemId } = router.query as {
     productId: string;
     vendoritemId: string;
     itemId: string;
   };
 
+  const { breadCrumb, productInfo, otherProductList, productDetail } =
+    useRequestProduct({
+      productId,
+      vendoritemId,
+      itemId,
+    }) as {
+      breadCrumb: BreadCrumbType[];
+      productInfo: ProductInfoType;
+      otherProductList: OtherProductListType;
+      productDetail: ProductDetailType;
+    };
+
   useEffect(() => {
     if (!router.isReady) return;
+
     setStatus(true);
   }, [router.isReady]);
 
@@ -27,16 +48,14 @@ export default function VendoritemPage() {
       {status && (
         <Wrapper>
           <Header>
-            <BreadCrumb productId={productId} />
+            {breadCrumb && <BreadCrumb breadCrumb={breadCrumb} />}
           </Header>
           <Content>
-            <ProductInfo productId={productId} vendoritemId={vendoritemId} />
-            <OtherProduct productId={productId} />
-            <ProductDetail
-              productId={productId}
-              vendoritemId={vendoritemId}
-              itemId={itemId}
-            />
+            {productInfo && <ProductInfo productInfo={productInfo} />}
+            {otherProductList && (
+              <OtherProduct otherProductList={otherProductList} />
+            )}
+            {productDetail && <ProductDetail productDetail={productDetail} />}
           </Content>
         </Wrapper>
       )}

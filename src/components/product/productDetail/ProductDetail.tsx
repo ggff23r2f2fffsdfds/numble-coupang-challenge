@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { useRequest } from 'src/hooks';
 import { ProductDetailType } from 'src/types/product';
 import { InfoTable, DetailImages } from './';
 
@@ -13,48 +12,35 @@ const tabArray: string[] = [
 ];
 
 type ProductDetailProps = {
-  productId: string;
-  itemId: string;
-  vendoritemId: string;
+  productDetail: ProductDetailType;
 };
 
-export default function ProductDetail({
-  productId,
-  itemId,
-  vendoritemId,
-}: ProductDetailProps) {
+export default function ProductDetail({ productDetail }: ProductDetailProps) {
   const [currentActive, setCurrentActive] = useState(0);
-
-  const productDetail = useRequest<ProductDetailType>(
-    `products/${productId}/items/${itemId}/vendoritems/${vendoritemId}`
-  ) as ProductDetailType;
 
   const handleTabClick = (index: number) => {
     setCurrentActive(index);
   };
 
-  console.log(productDetail);
   return (
     <Container>
-      {productDetail && (
-        <Wrapper>
-          <TabList>
-            {tabArray.map((tab, index) => (
-              <TabItem
-                key={index}
-                isActive={currentActive === index}
-                onClick={() => handleTabClick(index)}
-              >
-                {tab}
-              </TabItem>
-            ))}
-          </TabList>
-          <Content>
-            <InfoTable essentials={productDetail.essentials} />
-            <DetailImages contentImages={productDetail.contentImages} />
-          </Content>
-        </Wrapper>
-      )}
+      <Wrapper>
+        <TabList>
+          {tabArray.map((tab, index) => (
+            <TabItem
+              key={index}
+              isActive={currentActive === index}
+              onClick={() => handleTabClick(index)}
+            >
+              {tab}
+            </TabItem>
+          ))}
+        </TabList>
+        <Content>
+          <InfoTable essentials={productDetail.essentials} />
+          <DetailImages contentImages={productDetail.contentImages} />
+        </Content>
+      </Wrapper>
     </Container>
   );
 }

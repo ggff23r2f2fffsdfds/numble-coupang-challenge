@@ -1,43 +1,32 @@
 import styled from '@emotion/styled';
-import { useRequest } from '../../../hooks';
-import { ProductInfoType } from '../../../types/product';
 import { ProductImages, BundleOption, Shipping, Price, Description } from './';
+import { ProductInfoType } from 'src/types/product';
 
 type ProductInfoProps = {
-  productId: string;
-  vendoritemId: string;
+  productInfo: ProductInfoType;
 };
 
-export default function ProductInfo({
-  productId,
-  vendoritemId,
-}: ProductInfoProps) {
-  const productInfo = useRequest<ProductInfoType>(
-    `products/${productId}/vendoritems/${vendoritemId}`
-  ) as ProductInfoType;
-
+export default function ProductInfo({ productInfo }: ProductInfoProps) {
   return (
     <Container>
-      {productInfo && (
-        <Wrapper>
-          <ProductImagesBox>
-            <ProductImages images={productInfo.images} />
-          </ProductImagesBox>
-          <ProductInfoBox>
-            <Name>
-              <h2>{productInfo.name}</h2>
-            </Name>
-            <Price price={productInfo.price} ccidInfo={productInfo.ccidInfo} />
-            <Shipping deliveryList={productInfo.deliveryList} />
-            <BundleOption bundleOption={productInfo.bundleOption} />
-            <Quantity>
-              <input type="number" value={1} readOnly />
-              <QuantityButton>로켓와우 무료 체험하기</QuantityButton>
-            </Quantity>
-            <Description sellingInfo={productInfo.sellingInfo} />
-          </ProductInfoBox>
-        </Wrapper>
-      )}
+      <Wrapper>
+        <ProductImagesBox>
+          <ProductImages images={productInfo.images} />
+        </ProductImagesBox>
+        <ProductInfoBox>
+          <Name>
+            <h2>{productInfo.name}</h2>
+          </Name>
+          <Price price={productInfo.price} ccidInfo={productInfo.ccidInfo} />
+          <Shipping deliveryList={productInfo.deliveryList} />
+          <BundleOption bundleOption={productInfo.bundleOption} />
+          <Quantity>
+            <input type="number" value={1} readOnly />
+            <QuantityButton>로켓와우 무료 체험하기</QuantityButton>
+          </Quantity>
+          <Description sellingInfo={productInfo.sellingInfo} />
+        </ProductInfoBox>
+      </Wrapper>
     </Container>
   );
 }
